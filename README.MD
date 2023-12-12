@@ -5,19 +5,18 @@ Tene un poco de paciencia, que corriendo este script tenes chances de agarrar cu
 ---
 
 
-#### COMO CORRERLO
-
-Primero ingresa 
+## COMO CORRERLO
 
 1. Metete en https://vtvpba.minfra.gba.gob.ar/SolicitudTurno. 
     - Click derecho -> "inspect" -> Tab "Network"
-    - Carga tus datos personales y selecciona distintas plantas. Para cada una, chequea el request "turnos_por_fechas.json?planta_id=" y guardate el ID.
-    - Carga los id's con los nombres en el archivo main.py
+    - Carga tus datos personales y selecciona distintas plantas. Para cada una, chequea el request en la tab network que arranca `turnos_por_fechas.json?planta_id=` y guardate el `ID`.
+    - Carga los id's con los nombres de las plantas para tener como referencia en el archivo `main.py`
     - Por las dudas, copiate la cookie y guardala en el archivo `.env` (ver abajo)
 2. [OPCIONAL] Create un Bot en Telegram . Vas a necesitar el TOKEN para autenticarte, y el CHAT_ID para mandar los mensajes a ese thread. https://www.directual.com/lesson-library/how-to-create-a-telegram-bot
     - Si queres mandar la notificación a TG, marca el SEND_TO_BOT=TRUE en el `.env`
 3. Clonate este repo local.
 4. Crea un archivo .env y completa las variables que se muestran abajo
+    - Modifica MAX_DATE para la fecha que vos quieras buscar como máximo. Solo te va a alertar si encuentra un turno antes de esa fecha.
 5. Dale play 
 ```shell
 python main.py
