@@ -15,9 +15,10 @@ Tene un poco de paciencia, que corriendo este script tenes chances de agarrar cu
 2. [OPCIONAL] Create un Bot en Telegram . Vas a necesitar el TOKEN para autenticarte, y el CHAT_ID para mandar los mensajes a ese thread. https://www.directual.com/lesson-library/how-to-create-a-telegram-bot
     - Si queres mandar la notificación a TG, marca el SEND_TO_BOT=TRUE en el `.env`
 3. Clonate este repo local.
-4. Crea un archivo .env y completa las variables que se muestran abajo
+4. Instala dependencias, por las dudas -> `pip install -r requirements.txt`
+5. Crea un archivo .env y completa las variables que se muestran abajo
     - Modifica MAX_DATE para la fecha que vos quieras buscar como máximo. Solo te va a alertar si encuentra un turno antes de esa fecha.
-5. Dale play 
+6. Dale play 
 ```shell
 python main.py
 ```
