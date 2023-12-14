@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  vtv-finder
+
+  Sample SAM Template for vtv-finder
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 120
+    MemorySize: 128
+
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  VtvFinderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: vtv_finder/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          TOKEN: 
+          CHAT_ID: 
+          MAX_DATE: 
+          COOKIE: 
+          SLEEP_TIME_IN_SEC: 60
+          PATENTE: 
+          SEND_TO_BOT: TRUE
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: .
+

@@ -2,7 +2,6 @@ import logging
 import os
 from dotenv import load_dotenv
 import requests
-from six.moves.urllib.parse import urlencode, urlunparse
 import datetime
 import time
 import json
@@ -17,8 +16,6 @@ logging.basicConfig(
 logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
-
-load_dotenv()
 
 plantas = {
     "24": "VICENTE LOPEZ",
@@ -105,11 +102,11 @@ def _check_if_results_ok(json_str, planta_value):
 def _sleep():
     logger.info(f"sleeping: {int(os.environ['SLEEP_TIME_IN_SEC'])} seconds")
     time.sleep(int(os.environ['SLEEP_TIME_IN_SEC']))
-    
-
 
 def run():
+    load_dotenv()
     exito = False
+    errors = []
     try:
         while exito == False:
             for planta_key, planta_value in plantas.items():
@@ -120,20 +117,24 @@ def run():
                 if not rsp.content:
                     logger.warning(f"Empty response for planta: {planta_value}")
                     continue  # Skip processing this planta if the response is empty
-                try:
-                    rsp_json = rsp.json()
-                except json.JSONDecodeError as e:
-                    logger.error(f"Error decoding JSON response for planta {planta_value}: {e}")
-                    continue  # Skip processing this planta if there's a JSON decoding error
 
-                exito = _check_if_results_ok(rsp_json, planta_value)
+                if rsp.status_code != 200:
+                    logger.info(f"Response error: {rsp.text}")
+                else:
+                    try:
+                        rsp_json = rsp.json()
+                        exito = _check_if_results_ok(rsp_json, planta_value)
+                    except json.JSONDecodeError as e:
+                        logger.error(f"Error decoding JSON response for planta {planta_value}: {e}")
+                        continue  # Skip processing this planta if there's a JSON decoding error
             _sleep()
 
-
     except Exception as e:
+        errors.append(e)
         logger.error(f"Exception happened: {e}")
         if os.environ['SEND_TO_BOT'].lower() == 'true': 
             _send_to_tg(f"Exception happened: {e}")
+    return errors
 
 if __name__ == "__main__":
     run()

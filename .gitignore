@@ -104,6 +104,8 @@ env.list
 .venv
 env/
 venv/
+myvenv/
+myvenv
 ENV/
 env.bak/
 venv.bak/
@@ -128,3 +130,7 @@ dmypy.json
 
 .idea/
 .DS_Store
+
+# SAM Directories
+.aws-sam
+/.aws-sam
